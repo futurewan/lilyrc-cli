@@ -1,5 +1,6 @@
 {
   "name": "lilyrc-cli-template",
+  "private": true,
   "version": "1.1.1",
   "description": "",
   "main": "index.js",
@@ -66,5 +67,6 @@
     "> 1%",
     "Android > 4",
     "last 5 versions"
-  ]
+  ],
+  "gitHead": "a71e015eb91a649dfa6f929252b04edcee1fca15"
 }

@@ -34,5 +34,6 @@
     "inquirer": "^8.2.0",
     "log-symbols": "4.1.0",
     "ora": "5.4.1"
-  }
+  },
+  "gitHead": "a71e015eb91a649dfa6f929252b04edcee1fca15"
 }
