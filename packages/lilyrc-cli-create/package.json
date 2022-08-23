@@ -1,0 +1,38 @@
+{
+  "name": "lilyrc-cli-create",
+  "version": "1.0.0",
+  "description": "创建react工程项目",
+  "author": "万亚飞 <wanyafei91@163.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "bin": {
+    "lilyrc-create": "./lib/index.js"
+  },
+  "contributors": [
+    "futurewan"
+  ],
+  "files": [
+    "lib",
+    "node_modules"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "scripts": {
+    "test": "node ./__tests__/lilyrc-cli-create.test.js"
+  },
+  "dependencies": {
+    "chalk": "4.1.2",
+    "commander": "9.4.0",
+    "download-git-repo": "^3.0.2",
+    "ini": "^3.0.0",
+    "inquirer": "^8.2.0",
+    "log-symbols": "4.1.0",
+    "ora": "5.4.1"
+  }
+}

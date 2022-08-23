@@ -1,0 +1,17 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "init": "cd packages/react-scripts && node bin/react-scripts.js start"
+  },
+  "devDependencies": {
+    "eslint": "^8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "lerna": "^5.4.3",
+    "prettier": "^2.7.1"
+  }
+}

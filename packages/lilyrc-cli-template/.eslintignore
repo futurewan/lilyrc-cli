@@ -1,0 +1,7 @@
+**/dist/**
+**/node_modules/**
+**/config/**
+.eslintrc.js
+postcss.config.js
+index.html
+tsconfig.json
