@@ -1,11 +1,16 @@
-# `lilyrc-cli`
+# 打包react工程
 
-> TODO: description
-
-## Usage
-
+## 安装
 ```
-const lilyrcCli = require('lilyrc-cli');
+npm i -g lilyrc-cli
+```
 
-// TODO: DEMONSTRATE API
+## 启动开发环境
+```
+lilyrc-cli start
+```
+
+## 打包
+```
+lilyrc-cli build
 ```

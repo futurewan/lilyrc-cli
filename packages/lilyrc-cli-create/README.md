@@ -1,11 +1,11 @@
-# `lilyrc-cli-create`
-
-> TODO: description
-
-## Usage
-
+# 前端脚手架工具
+用于生成前端基础工程项目（react版），脚手架包含webpack相关配置，零配置即可启动项目
+## 安装
 ```
-const lilyrcCliCreate = require('lilyrc-cli-create');
+npm i -g lilyrc-cli-create
+```
 
-// TODO: DEMONSTRATE API
+## 初始化项目
+```
+lilyrc-cli <project-name>
 ```
