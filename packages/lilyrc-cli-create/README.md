@@ -7,5 +7,5 @@ npm i -g lilyrc-cli-create
 
 ## 初始化项目
 ```
-lilyrc-cli <project-name>
+lilyrc-create <project-name>
 ```

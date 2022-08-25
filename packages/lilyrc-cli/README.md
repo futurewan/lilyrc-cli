@@ -1,4 +1,4 @@
-# 打包react工程
+# 打包`lilyrc-cli-create`脚手架生成的工程
 
 ## 安装
 ```
