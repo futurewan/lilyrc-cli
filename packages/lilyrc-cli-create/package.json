@@ -16,6 +16,10 @@
   "contributors": [
     "futurewan"
   ],
+  "keywords": [
+    "cli",
+    "react"
+  ],
   "files": [
     "lib",
     "node_modules"
