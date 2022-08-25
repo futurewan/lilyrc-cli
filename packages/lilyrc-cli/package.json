@@ -1,7 +1,7 @@
 {
   "name": "lilyrc-cli",
   "version": "1.1.1",
-  "description": "create base react project",
+  "description": "打包lilyrc-cli-create脚手架生成的工程",
   "author": "万亚飞 <wanyafei91@163.com>",
   "homepage": "",
   "license": "ISC",
@@ -15,6 +15,10 @@
   },
   "contributors": [
     "futurewan"
+  ],
+  "keywords": [
+    "cli",
+    "react"
   ],
   "files": [
     "lib",
