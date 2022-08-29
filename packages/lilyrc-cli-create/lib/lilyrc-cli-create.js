@@ -10,6 +10,10 @@ const encode = ini.encode;
 const symbol = require('log-symbols');
 
 const fs = require('fs');
+const fse = require('fs-extra');
+const path = require('path');
+const os = require('os');
+const spawn = require('cross-spawn');
 const promisify = require('util').promisify;
 const stat = promisify(fs.stat); // 同步方式
 const readFile = promisify(fs.readFile);
@@ -42,58 +46,10 @@ function fsStat(path, capture = true) {
   });
 }
 
-function getConfig() {
-  return new Promise(resolve => {
-    fsStat(RC, false).then(statRes => {
-      if (statRes) {
-        readFile(RC, 'utf8').then(optsRes => {
-          resolve(decode(optsRes));
-        });
-      } else {
-        resolve({});
-      }
-    });
-  });
-}
-
 function WriteFileConfig(RC, opts) {
   return writeFile(RC, encode(opts), 'utf8').then(() => {
     // console.log('\n创建配置文件成功');
     Promise.resolve(true);
-  });
-}
-// registry
-function setConfig(key, value) {
-  return fsStat(RC, false).then(rcOption => {
-    let opts = {};
-    if (rcOption) {
-      readFile(RC, 'utf8').then(optsRes => {
-        opts = decode(optsRes);
-        if (!key) {
-          console.log(
-            chalk.red(chalk.bold('Error:')),
-            chalk.red('key is required')
-          );
-          return;
-        }
-        if (!value) {
-          console.log(
-            chalk.red(chalk.bold('Error:')),
-            chalk.red('value is required')
-          );
-          return;
-        }
-        Object.assign(opts, { [key]: value });
-        WriteFileConfig(RC, opts).then(writeRes => {
-          Promise.resolve(writeRes);
-        });
-      });
-    } else {
-      Object.assign(opts, DEFAULTS, key && value ? { [key]: value } : {});
-      WriteFileConfig(RC, opts).then(writeRes => {
-        Promise.resolve(writeRes);
-      });
-    }
   });
 }
 
@@ -178,53 +134,79 @@ function init() {
     .showHelpAfterError()
     .parse(process.argv);
 }
+function install(root, dependencies) {
+  return new Promise((resolve, reject) => {
+    let command = 'npm';
+    let args = ['install', '--no-audit', '--save', '--save-exact'].concat(
+      dependencies
+    );
 
-function createApp(projectName) {
-  getConfig().then(config => {
-    // 未配置仓库地址
-    if (!config.registry) {
-      inquirer
-        .prompt([
-          {
-            name: 'isCreate',
-            message: '您还没有配置仓库信息，是否使用默认配置',
-            type: 'confirm',
-          },
-        ])
-        .then(answer => {
-          const { isCreate } = answer;
-          // 使用默认配置
-          if (isCreate) {
-            setConfig().then(() => {
-              createProject(projectName);
-            });
-          } else {
-            inquirer
-              .prompt([
-                {
-                  name: 'registry',
-                  message: '请输入仓库名称',
-                },
-              ])
-              .then(config => {
-                const { registry } = config;
-                if (registry) {
-                  setConfig('registry', registry).then(() => {
-                    createProject(projectName);
-                  });
-                } else {
-                  console.log('退出创建配置文件');
-                }
-              });
-          }
-        })
-        .catch(err => {
-          console.log('读取配置文件出错', err);
+    const child = spawn(command, args, { stdio: 'inherit' });
+    child.on('close', code => {
+      console.log('code', code);
+      if (code !== 0) {
+        reject({ command: `${command} ${args.join(' ')}` });
+        return;
+      }
+      resolve();
+    });
+  });
+}
+function executeNodeScript({ cwd }, data, source) {
+  return new Promise((resolve, reject) => {
+    console.log('process.execPath', process.execPath, JSON.stringify(data));
+    const child = spawn(
+      process.execPath,
+      ['-e', source, '--', JSON.stringify(data)],
+      { cwd, stdio: 'inherit' }
+    );
+    child.on('close', code => {
+      if (code !== 0) {
+        reject({
+          command: 'node',
         });
-      return false;
-    } else {
-      createProject(projectName);
-    }
+        return;
+      }
+      resolve();
+    });
+  });
+}
+function createApp(projectName, template) {
+  const root = path.resolve(projectName);
+  const templateName = template || 'lilyrc-cli-template';
+  console.log('root', root, fs.existsSync(projectName));
+  if (fs.existsSync(projectName)) {
+    console.log('\n', symbol.error, chalk.red('项目名重复'));
+    process.exit(1);
+  }
+  fse.ensureDirSync(projectName);
+
+  const packageJson = {
+    name: projectName,
+    version: '0.1.0',
+    private: true,
+  };
+  fse.writeFileSync(
+    path.join(root, 'package.json'),
+    JSON.stringify(packageJson, null, 2) + os.EOL
+  );
+  console.log(process.cwd());
+
+  const allDependencies = ['react', 'react-dom', 'lilyrc-cli', templateName];
+
+  const originalDirectory = process.cwd();
+  process.chdir(root);
+  install(root, allDependencies).then(() => {
+    executeNodeScript(
+      {
+        cwd: process.cwd(),
+      },
+      [root, projectName, originalDirectory, templateName],
+      `
+    const init = require('lilyrc-cli/scripts/init.js');
+    init.apply(null, JSON.parse(process.argv[1]));
+      `
+    );
   });
 }
 module.exports = init;
