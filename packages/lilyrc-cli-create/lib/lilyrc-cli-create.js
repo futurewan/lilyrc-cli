@@ -175,38 +175,40 @@ function createApp(projectName, template) {
   const root = path.resolve(projectName);
   const templateName = template || 'lilyrc-cli-template';
   console.log('root', root, fs.existsSync(projectName));
-  if (fs.existsSync(projectName)) {
-    console.log('\n', symbol.error, chalk.red('项目名重复'));
-    process.exit(1);
-  }
-  fse.ensureDirSync(projectName);
+  // if (fs.existsSync(projectName)) {
+  //   console.log('\n', symbol.error, chalk.red('项目名重复'));
+  //   process.exit(1);
+  // }
+  // fse.ensureDirSync(projectName);
 
-  const packageJson = {
-    name: projectName,
-    version: '0.1.0',
-    private: true,
-  };
-  fse.writeFileSync(
-    path.join(root, 'package.json'),
-    JSON.stringify(packageJson, null, 2) + os.EOL
-  );
-  console.log(process.cwd());
+  // const packageJson = {
+  //   name: projectName,
+  //   version: '0.1.0',
+  //   private: true,
+  // };
+  // fse.writeFileSync(
+  //   path.join(root, 'package.json'),
+  //   JSON.stringify(packageJson, null, 2) + os.EOL
+  // );
 
   const allDependencies = ['react', 'react-dom', 'lilyrc-cli', templateName];
 
   const originalDirectory = process.cwd();
+  console.log('originalDirectory', originalDirectory);
   process.chdir(root);
-  install(root, allDependencies).then(() => {
-    executeNodeScript(
-      {
-        cwd: process.cwd(),
-      },
-      [root, projectName, originalDirectory, templateName],
-      `
-    const init = require('lilyrc-cli/scripts/init.js');
-    init.apply(null, JSON.parse(process.argv[1]));
-      `
-    );
-  });
+  const init = require('lilyrc-cli/lib/scripts/init.js');
+  init(root, projectName, originalDirectory, templateName);
+  // install(root, allDependencies).then(() => {
+  // executeNodeScript(
+  //   {
+  //     cwd: process.cwd(),
+  //   },
+  //   [root, projectName, originalDirectory, templateName],
+  //   `
+  //   const init = require('lilyrc-cli/lib/scripts/init.js');
+  //   init.apply(null, JSON.parse(process.argv[1]));
+  //     `
+  // );
+  // });
 }
 module.exports = init;
