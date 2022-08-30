@@ -15,6 +15,7 @@ const packageJson = require('../package.json');
 function init() {
   const program = new Command(packageJson.name);
   program
+    .version(packageJson.version)
     .arguments('<project-name>')
     .description('从模板项目初始化一个新项目')
     .usage('<project-name>')
@@ -24,8 +25,6 @@ function init() {
     })
     .showHelpAfterError()
     .parse(process.argv);
-
-  program.version(packageJson.version, '-v, --version');
 }
 function install(root, dependencies) {
   return new Promise((resolve, reject) => {
