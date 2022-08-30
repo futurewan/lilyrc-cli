@@ -11,7 +11,7 @@
     "test": "__tests__"
   },
   "bin": {
-    "lilyrc-create": "./lib/index.js"
+    "lilyrc-cli-create": "./lib/index.js"
   },
   "contributors": [
     "futurewan"

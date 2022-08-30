@@ -2,7 +2,7 @@
 
 ## 安装
 ```
-npm i -g lilyrc-cli
+npm i lilyrc-cli
 ```
 
 ## 启动开发环境

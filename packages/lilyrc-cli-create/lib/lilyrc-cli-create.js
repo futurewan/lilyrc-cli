@@ -24,6 +24,8 @@ function init() {
     })
     .showHelpAfterError()
     .parse(process.argv);
+
+  program.version(packageJson.version, '-v, --version');
 }
 function install(root, dependencies) {
   return new Promise((resolve, reject) => {
