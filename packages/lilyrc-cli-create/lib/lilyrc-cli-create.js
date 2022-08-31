@@ -110,8 +110,7 @@ function createApp(projectName, template) {
       console.log(
         `Installing ${chalk.cyan('react')}, ${chalk.cyan(
           'react-dom'
-        )}, and ${chalk.cyan('lilyrc-cli')} with ${chalk.cyan(templateName)} 
-        ...`
+        )}, ${chalk.cyan('lilyrc-cli')} and ${chalk.cyan(templateName)}...`
       );
       install(root, allDependencies).then(() => {
         executeNodeScript(

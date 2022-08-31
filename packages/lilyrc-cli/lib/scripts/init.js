@@ -28,7 +28,7 @@ module.exports = function (appPath, appName, originalDirectory, templateName) {
     templateJson = require(templateJsonPath);
   }
   const templatePackage = templateJson || {};
-  const templatePackageToMerge = ['dependencies', 'scripts'];
+  const templatePackageToMerge = ['dependencies'];
   const templatePackageToReplace = Object.keys(templatePackage).filter(
     key => !templatePackageToMerge.includes(key)
   );
