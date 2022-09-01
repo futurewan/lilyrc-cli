@@ -4,16 +4,16 @@ const fs = require('fs');
 const path = require('path');
 let dotenv = require('dotenv');
 let dotenvExpand = require('dotenv-expand');
+const argv = require('yargs').argv;
 
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 const NODE_ENV = process.env.NODE_ENV;
-console.log('NODE_ENV', NODE_ENV);
 const envPath = resolveApp('./env/.env');
 const dotenvFiles = [
   NODE_ENV === 'development' && `${envPath}.local`,
-  `${envPath}.${NODE_ENV}`,
+  `${envPath}.${argv.env || 'development'}`,
   envPath,
 ].filter(Boolean);
 
