@@ -23,12 +23,13 @@ function run() {
   const scriptIndex = args.findIndex(
     x => x === 'build' || x === 'start' || x === 'test'
   );
-  const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : [];
+  const nodeArgs = [];
 
   program
     .command(actionMap.build.command)
     .description(actionMap.build.description)
-    .option('-c,--config <configPath>', 'config file path')
+    .option('-c,--config <configPath>', '配置文件路径')
+    .option('--env <environment>', '添加环境变量', 'development')
     .action(() => {
       const result = spawn.sync(
         process.execPath,
@@ -43,7 +44,8 @@ function run() {
   program
     .command(actionMap.start.command)
     .description(actionMap.start.description)
-    .option('-c,--config <configPath>', 'config file path')
+    .option('-c,--config <configPath>', '配置文件路径')
+    .option('--env <environment>', '添加环境变量', 'development')
     .action(() => {
       const result = spawn.sync(
         process.execPath,
