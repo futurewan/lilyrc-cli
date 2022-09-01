@@ -3,4 +3,4 @@ lerna-debug.log
 yarn.lock
 package-lock.json
 
-l1/
+/packages/l1/
