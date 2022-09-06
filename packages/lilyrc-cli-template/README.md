@@ -10,10 +10,6 @@
   - `lint-staged`配合`husky`在提交代码前对代码检查是否符合`ESLint`和`Stylelint`配置的规则
   - `commitlint`配合`husky`校验提交的commit信息是否符合规范
 
-## 环境变量配置
-env目录存放不同环境所需的全局变量。
-命名规范：.env.{环境标识}
-
 ## 其他工具
 - `PostCSS` CSS的转换工具
   - `autoprefixer`：添加浏览器特定前缀

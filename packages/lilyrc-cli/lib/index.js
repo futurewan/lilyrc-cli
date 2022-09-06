@@ -29,6 +29,7 @@ function run() {
     .command(actionMap.build.command)
     .description(actionMap.build.description)
     .option('-c,--config <configPath>', '配置文件路径')
+    .option('--report <isReport>', '是否开启包分析')
     .option('--env <environment>', '添加环境变量', 'development')
     .action(() => {
       const result = spawn.sync(

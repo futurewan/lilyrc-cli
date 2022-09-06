@@ -1,4 +1,5 @@
 'use strict';
+const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -11,13 +12,14 @@ const smp = new SpeedMeasurePlugin();
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const argv = require('yargs').argv;
 
 const paths = require('./paths');
 
 const clientEnvironment = require('./env');
 const env = clientEnvironment();
 module.exports = function (webpackEnv, runConfig = {}) {
-  const { outputPath = '', publicPath, copy = [] } = runConfig;
+  const { outputPath = '/dist', publicPath ='/', copy = [] } = runConfig;
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
   const getStyleLoaders = ({ modules = true }) =>
@@ -44,8 +46,8 @@ module.exports = function (webpackEnv, runConfig = {}) {
     mode: isEnvProduction ? 'production' : 'development',
     entry,
     output: {
-      path: paths.appDist + outputPath,
-      publicPath: publicPath || '/',
+      path: path.join(paths.rootDir,outputPath),
+      publicPath,
       filename: `static/js/[name]${
         isEnvProduction ? '.[contenthash:8]' : ''
       }.js`,
@@ -183,23 +185,16 @@ module.exports = function (webpackEnv, runConfig = {}) {
         )
       ),
       new webpack.ProgressPlugin(),
-      isEnvProduction &&
-        new MiniCssExtractPlugin({
-          filename: 'static/css/[name].[contenthash:10].css',
-        }),
       isEnvDevelopment && new ReactRefreshPlugin({ overlay: false }),
       new CopyWebpackPlugin({
         patterns: [
           {
             from: 'favicon.ico',
           },
-          // {
-          //   from: 'public',
-          // },
           ...copy,
         ],
       }),
-      process.env.NODE_ENV_REPORT && new BundleAnalyzerPlugin(),
+      argv.report && new BundleAnalyzerPlugin(),
     ].filter(Boolean),
     performance: {
       maxEntrypointSize: 250000,
@@ -213,9 +208,14 @@ module.exports = function (webpackEnv, runConfig = {}) {
       modules: ['node_modules', paths.appNodeModules], // 默认是当前目录下的 node_modules
     },
   };
-
-  if (process.env.NODE_ENV_REPORT) {
+ console.log('argv.report',isEnvProduction,typeof argv.report)
+  if (argv.report) {
     webpackConfig = smp.wrap(webpackConfig);
+  }
+  if(isEnvProduction){
+    webpackConfig.plugins.push(new MiniCssExtractPlugin({
+      filename: 'static/css/[name].[contenthash:10].css',
+    }))
   }
   return webpackConfig;
 };
