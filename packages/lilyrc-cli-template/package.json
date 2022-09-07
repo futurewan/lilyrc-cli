@@ -12,5 +12,13 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/futurewan/lilyrc-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/futurewan/lilyrc-cli/issues"
+  },
+  "homepage": "https://github.com/futurewan/lilyrc-cli/blob/master/packages/lilyrc-cli-template/README.md",
   "gitHead": "a71e015eb91a649dfa6f929252b04edcee1fca15"
 }

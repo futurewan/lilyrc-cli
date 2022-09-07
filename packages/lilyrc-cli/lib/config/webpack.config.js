@@ -208,7 +208,6 @@ module.exports = function (webpackEnv, runConfig = {}) {
       modules: ['node_modules', paths.appNodeModules], // 默认是当前目录下的 node_modules
     },
   };
- console.log('argv.report',isEnvProduction,typeof argv.report)
   if (argv.report) {
     webpackConfig = smp.wrap(webpackConfig);
   }

@@ -21,19 +21,19 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 getRunConfig()
   .then(runConfig => {
-    const DEFAULT_PORT = runConfig.port || 8001;
-    if (runConfig.port) {
+    const { port, proxy } = runConfig;
+    const DEFAULT_PORT = port || 8001;
+    if (port) {
       console.log(
         chalk.cyan(
           `Attempting to bind to HOST environment variable: ${chalk.yellow(
-            chalk.bold(runConfig.port)
+            chalk.bold(port)
           )}`
         )
       );
     }
-    choosePort(HOST, DEFAULT_PORT).then(port => {
-      if (port == null) {
-        // We have not found a port.
+    choosePort(HOST, DEFAULT_PORT).then(newPort => {
+      if (newPort == null) {
         return;
       }
 
@@ -44,7 +44,7 @@ getRunConfig()
       const urls = prepareUrls(
         protocol,
         HOST,
-        port
+        newPort
         // paths.publicUrlOrPath.slice(0, -1)
       );
       const compiler = createCompiler({
@@ -56,8 +56,9 @@ getRunConfig()
       });
       const serverConfig = {
         // ...createDevServerConfig(proxyConfig, urls.lanUrlForConfig),
+        proxy,
         host: HOST,
-        port,
+        port: newPort,
         historyApiFallback: true,
       };
       const devServer = new WebpackDevServer(serverConfig, compiler);

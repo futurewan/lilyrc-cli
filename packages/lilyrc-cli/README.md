@@ -29,11 +29,24 @@ lilyrc-cli build --env production
 `start`和`build`命令默认会使用根目录下 lilyrc.config.js 文件作为默认配置项。   
 也可使用 `--config <configPath>`来指定路径
 有哪些可以配置的项：
+
+- 启动项目类参数
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | ------- | --- | --- |
+| port | 开发环境端口，如果当前端口被暂用，端口号+1 | number | 8001 |
+| proxy | 开发环境 proxy 代理，语法参考[http-proxy-middleware](https://webpack.js.org/configuration/dev-server/#devserverproxy)  | object | - |
+
+
+
+
+- 打包项目类参数
+
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | ------- | --- | --- |
 | outputPath | 打包输出目录<br/>这里支持二级目录，e.g. dist/pro1 | string | - |
 | publicPath | 资源的基础路径，一般用在资源放在cdn上，需要配置其路径；同`webpack`的`output.publicPath` | string | / |
-| copy | 静态资源，拷贝至`outputPath`目录<br/> `copy-webpack-plugin`插件使用方法，<br/>e.g. ```[{from:'public',to:'assets'}]``` | object[] | `[{ from: 'favicon.ico'}]` |
+| copy | 静态资源，拷贝至`outputPath`目录<br/> 使用方法参考 [copy-webpack-plugin](https://www.npmjs.com/package/copy-webpack-plugin) 插件patterns参数，<br/>e.g. ```[{from:'public',to:'assets'}]``` | object[] | `[{ from: 'favicon.ico'}]` |
 
 
 ## 开启 `webpack-bundle-analyzer` 包分析

@@ -4,6 +4,7 @@
     "start:test": "lilyrc-cli start --env test",
     "build:test": "lilyrc-cli build --env test",
     "build:prod": "lilyrc-cli build --env production",
+    "build:report": "lilyrc-cli build --env production --report true",
     "lint": "eslint src --ext ts,tsx,js,jsx && stylelint --fix \"./src/**/*.{less,css}\" --custom-syntax postcss-less",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,json}\"",
     "commit": "git-cz",

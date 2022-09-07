@@ -3,7 +3,6 @@
   "version": "1.2.6",
   "description": "创建react工程项目",
   "author": "万亚飞 <wanyafei91@163.com>",
-  "homepage": "",
   "license": "ISC",
   "main": "lib/index.js",
   "directories": {
@@ -27,6 +26,14 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/futurewan/lilyrc-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/futurewan/lilyrc-cli/issues"
+  },
+  "homepage": "https://github.com/futurewan/lilyrc-cli/blob/master/packages/lilyrc-cli-create/README.md",
   "scripts": {
     "test": "node ./__tests__/lilyrc-cli-create.test.js"
   },
