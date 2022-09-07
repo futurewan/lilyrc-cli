@@ -4,6 +4,9 @@
   "workspaces": [
     "packages/*"
   ],
+  "ignoreChanges": [
+    "l1/*"
+  ],
   "scripts": {
     "init": "cd packages/react-scripts && node bin/react-scripts.js start"
   },
