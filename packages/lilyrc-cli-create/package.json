@@ -1,6 +1,6 @@
 {
   "name": "lilyrc-cli-create",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "创建react工程项目",
   "author": "万亚飞 <wanyafei91@163.com>",
   "license": "ISC",
